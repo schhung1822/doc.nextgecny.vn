@@ -19,6 +19,48 @@ interface DataContextType {
 
 const DataContext = createContext<DataContextType | undefined>(undefined);
 
+const STORAGE_KEYS = {
+  version: 'ngc_data_version',
+  categories: 'ngc_categories',
+  products: 'ngc_products',
+  documents: 'ngc_documents',
+};
+
+const normalizeProducts = (items: Product[]) =>
+  items.map((product) => ({ ...product, slug: product.slug || generateSlug(product.name) }));
+
+const normalizeDocuments = (items: Doc[]) =>
+  items.map((document) => ({ ...document, slug: document.slug || generateSlug(document.title) }));
+
+const createSeedVersion = () => {
+  const rawSeed = JSON.stringify({
+    categories: initialCategories,
+    products: normalizeProducts(initialProducts),
+    documents: normalizeDocuments(initialDocuments),
+  });
+
+  let hash = 0;
+  for (let index = 0; index < rawSeed.length; index += 1) {
+    hash = (hash * 31 + rawSeed.charCodeAt(index)) >>> 0;
+  }
+
+  return `seed_${hash.toString(36)}`;
+};
+
+const DATA_SEED_VERSION = createSeedVersion();
+
+const readStoredValue = <T,>(key: string): T | null => {
+  const rawValue = localStorage.getItem(key);
+  if (!rawValue) return null;
+
+  try {
+    return JSON.parse(rawValue) as T;
+  } catch {
+    localStorage.removeItem(key);
+    return null;
+  }
+};
+
 export function DataProvider({ children }: { children: ReactNode }) {
   const [categories, setCategories] = useState<Category[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
@@ -26,35 +68,38 @@ export function DataProvider({ children }: { children: ReactNode }) {
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    const storedCategories = localStorage.getItem('ngc_categories');
-    const storedProducts = localStorage.getItem('ngc_products');
-    const storedDocuments = localStorage.getItem('ngc_documents');
+    const storedVersion = localStorage.getItem(STORAGE_KEYS.version);
+    const canReuseStoredData = storedVersion === DATA_SEED_VERSION;
 
-    if (storedCategories) setCategories(JSON.parse(storedCategories));
-    else setCategories(initialCategories);
-
-    if (storedProducts) {
-      const parsed = JSON.parse(storedProducts);
-      setProducts(parsed.map((p: any) => ({ ...p, slug: p.slug || generateSlug(p.name) })));
-    } else {
-      setProducts(initialProducts);
+    if (!canReuseStoredData) {
+      localStorage.removeItem(STORAGE_KEYS.categories);
+      localStorage.removeItem(STORAGE_KEYS.products);
+      localStorage.removeItem(STORAGE_KEYS.documents);
     }
 
-    if (storedDocuments) {
-      const parsed = JSON.parse(storedDocuments);
-      setDocuments(parsed.map((d: any) => ({ ...d, slug: d.slug || generateSlug(d.title) })));
-    } else {
-      setDocuments(initialDocuments);
-    }
+    const storedCategories = canReuseStoredData
+      ? readStoredValue<Category[]>(STORAGE_KEYS.categories)
+      : null;
+    const storedProducts = canReuseStoredData
+      ? readStoredValue<Product[]>(STORAGE_KEYS.products)
+      : null;
+    const storedDocuments = canReuseStoredData
+      ? readStoredValue<Doc[]>(STORAGE_KEYS.documents)
+      : null;
+
+    setCategories(storedCategories ?? initialCategories);
+    setProducts(storedProducts ? normalizeProducts(storedProducts) : normalizeProducts(initialProducts));
+    setDocuments(storedDocuments ? normalizeDocuments(storedDocuments) : normalizeDocuments(initialDocuments));
 
     setIsLoaded(true);
   }, []);
 
   useEffect(() => {
     if (isLoaded) {
-      localStorage.setItem('ngc_categories', JSON.stringify(categories));
-      localStorage.setItem('ngc_products', JSON.stringify(products));
-      localStorage.setItem('ngc_documents', JSON.stringify(documents));
+      localStorage.setItem(STORAGE_KEYS.version, DATA_SEED_VERSION);
+      localStorage.setItem(STORAGE_KEYS.categories, JSON.stringify(categories));
+      localStorage.setItem(STORAGE_KEYS.products, JSON.stringify(products));
+      localStorage.setItem(STORAGE_KEYS.documents, JSON.stringify(documents));
     }
   }, [categories, products, documents, isLoaded]);
 

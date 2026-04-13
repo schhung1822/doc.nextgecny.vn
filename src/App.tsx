@@ -20,7 +20,8 @@ export default function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="product/:slug" element={<ProductPage />} />
-            <Route path="doc/:slug" element={<DocumentPage />} />
+            <Route path="doc/:docSlug" element={<DocumentPage />} />
+            <Route path=":productSlug/:docSlug" element={<DocumentPage />} />
             <Route path="admin" element={<AdminDashboard />} />
             <Route path="search" element={<SearchResults />} />
           </Route>

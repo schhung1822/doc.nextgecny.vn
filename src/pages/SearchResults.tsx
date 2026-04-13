@@ -4,6 +4,7 @@ import { motion } from 'motion/react';
 import { Search, FileText, Box, ChevronRight, Lock } from 'lucide-react';
 import { useData } from '../context/DataContext';
 import PartnerModal from '../components/PartnerModal';
+import { getDocumentPath } from '../lib/utils';
 
 export default function SearchResults() {
   const [searchParams] = useSearchParams();
@@ -12,7 +13,7 @@ export default function SearchResults() {
   const { products, documents } = useData();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [pendingSlug, setPendingSlug] = useState<string | null>(null);
+  const [pendingPath, setPendingPath] = useState<string | null>(null);
 
   const results = useMemo(() => {
     if (!query.trim()) return { products: [], documents: [] };
@@ -32,25 +33,25 @@ export default function SearchResults() {
     return { products: matchedProducts, documents: matchedDocuments };
   }, [query, products, documents]);
 
-  const handleDocClick = (e: React.MouseEvent, docSlug: string, isPartnerOnly: boolean) => {
+  const handleDocClick = (e: React.MouseEvent, docPath: string, isPartnerOnly: boolean) => {
     e.preventDefault();
     if (isPartnerOnly) {
       const isVerified = sessionStorage.getItem('isPartnerVerified') === 'true';
       if (isVerified) {
-        navigate(`/doc/${docSlug}`);
+        navigate(docPath);
       } else {
-        setPendingSlug(docSlug);
+        setPendingPath(docPath);
         setIsModalOpen(true);
       }
     } else {
-      navigate(`/doc/${docSlug}`);
+      navigate(docPath);
     }
   };
 
   const handlePartnerSuccess = () => {
     setIsModalOpen(false);
-    if (pendingSlug) {
-      navigate(`/doc/${pendingSlug}`);
+    if (pendingPath) {
+      navigate(pendingPath);
     }
   };
 
@@ -114,11 +115,12 @@ export default function SearchResults() {
                 <div className="space-y-4">
                   {results.documents.map((doc, index) => {
                     const product = products.find(p => p.id === doc.productId);
+                    const docPath = getDocumentPath(product?.slug, doc.slug);
                     return (
                       <motion.a
                         key={doc.id}
-                        href={`/doc/${doc.slug}`}
-                        onClick={(e) => handleDocClick(e, doc.slug, doc.isPartnerOnly)}
+                        href={docPath}
+                        onClick={(e) => handleDocClick(e, docPath, doc.isPartnerOnly)}
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: index * 0.05 }}

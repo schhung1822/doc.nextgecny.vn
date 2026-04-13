@@ -1,14 +1,15 @@
-import { useState, useEffect } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { useData } from '../context/DataContext';
 import PartnerModal from '../components/PartnerModal';
 import { ChevronLeft, Share2, Mail, Link as LinkIcon, Lock, Check, X, FileText } from 'lucide-react';
 import { motion } from 'motion/react';
+import { getDocumentContentCandidates, getDocumentPath } from '../lib/utils';
 
 export default function DocumentPage() {
-  const { slug } = useParams<{ slug: string }>();
+  const { productSlug, docSlug } = useParams<{ productSlug?: string; docSlug?: string }>();
   const navigate = useNavigate();
   const { products, documents } = useData();
 
@@ -17,37 +18,84 @@ export default function DocumentPage() {
   const [copied, setCopied] = useState(false);
   const [zoomedImg, setZoomedImg] = useState<string | null>(null);
 
-  const doc = documents.find(d => d.slug === slug);
-  const product = doc ? products.find(p => p.id === doc.productId) : null;
-  const relatedDocs = product ? documents.filter(d => d.productId === product.id && d.id !== doc?.id) : [];
+  const routeProduct = productSlug ? products.find((item) => item.slug === productSlug) ?? null : null;
+  const doc = productSlug
+    ? routeProduct
+      ? documents.find((item) => item.slug === docSlug && item.productId === routeProduct.id) ?? null
+      : null
+    : documents.find((item) => item.slug === docSlug) ?? null;
+  const product = doc ? products.find((item) => item.id === doc.productId) ?? null : null;
+  const relatedDocs = product ? documents.filter((item) => item.productId === product.id && item.id !== doc?.id) : [];
+  const canonicalPath = product ? getDocumentPath(product.slug, doc?.slug) : null;
 
-  const [content, setContent] = useState<string>('');
+  const [content, setContent] = useState('');
   const [isLoadingContent, setIsLoadingContent] = useState(true);
 
   useEffect(() => {
-    if (doc?.content) {
-      if (doc.content.startsWith('/')) {
-        setIsLoadingContent(true);
-        fetch(doc.content)
-          .then(res => {
-            if (!res.ok) throw new Error('Failed to fetch');
-            return res.text();
-          })
-          .then(text => {
-            if (text.trim().toLowerCase().startsWith('<!doctype html>')) {
-              setContent(`# Lỗi: Không tìm thấy file\nĐường dẫn \`${doc.content}\` không tồn tại hoặc bị sai định dạng.`);
-            } else {
-              setContent(text);
-            }
-          })
-          .catch(() => setContent('# Lỗi tải tài liệu\nKhông thể tải nội dung tài liệu.'))
-          .finally(() => setIsLoadingContent(false));
-      } else {
-        setContent(doc.content);
+    if (!doc) {
+      setContent('');
+      setIsLoadingContent(false);
+      return;
+    }
+
+    const contentCandidates = getDocumentContentCandidates(product?.slug, doc.slug, doc.content);
+    if (contentCandidates.length === 0) {
+      setContent(doc.content);
+      setIsLoadingContent(false);
+      return;
+    }
+
+    let isCancelled = false;
+
+    const loadDocumentContent = async () => {
+      setIsLoadingContent(true);
+
+      for (const contentPath of contentCandidates) {
+        try {
+          const separator = contentPath.includes('?') ? '&' : '?';
+          const requestUrl = import.meta.env.DEV
+            ? `${contentPath}${separator}v=${Date.now()}`
+            : contentPath;
+          const response = await fetch(requestUrl, { cache: 'no-store' });
+
+          if (!response.ok) {
+            continue;
+          }
+
+          const text = await response.text();
+          if (text.trim().toLowerCase().startsWith('<!doctype html>')) {
+            continue;
+          }
+
+          if (!isCancelled) {
+            setContent(text);
+            setIsLoadingContent(false);
+          }
+          return;
+        } catch {
+          continue;
+        }
+      }
+
+      if (!isCancelled) {
+        const attemptedPaths = contentCandidates.map((path) => `\`${path}\``).join(', ');
+        setContent(`# Loi tai tai lieu\nKhong the tai noi dung tu ${attemptedPaths}.`);
         setIsLoadingContent(false);
       }
+    };
+
+    void loadDocumentContent();
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [doc, product]);
+
+  useEffect(() => {
+    if (doc && product && (!productSlug || productSlug !== product.slug)) {
+      navigate(getDocumentPath(product.slug, doc.slug), { replace: true });
     }
-  }, [doc]);
+  }, [doc, product, productSlug, navigate]);
 
   useEffect(() => {
     if (doc?.isPartnerOnly) {
@@ -73,6 +121,10 @@ export default function DocumentPage() {
     );
   }
 
+  if (canonicalPath && productSlug && productSlug !== product.slug) {
+    return null;
+  }
+
   const handlePartnerSuccess = () => {
     setIsModalOpen(false);
     setIsVerified(true);
@@ -80,7 +132,7 @@ export default function DocumentPage() {
 
   const handlePartnerClose = () => {
     setIsModalOpen(false);
-    navigate(`/product/${product?.slug}`);
+    navigate(`/product/${product.slug}`);
   };
 
   const copyLink = () => {
@@ -89,42 +141,40 @@ export default function DocumentPage() {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  // ToC extraction with sequential IDs
-  const extractHeadings = (content: string) => {
-    const headings = [];
+  const extractHeadings = (markdownContent: string) => {
+    const extractedHeadings: { level: number; text: string; id: string }[] = [];
     const regex = /^(#{2,3})\s+(.+)$/gm;
     let match;
     let h2Count = 0;
     let h3Count = 0;
-    while ((match = regex.exec(content)) !== null) {
+
+    while ((match = regex.exec(markdownContent)) !== null) {
       const level = match[1].length;
       if (level === 2) {
-        h2Count++;
+        h2Count += 1;
         h3Count = 0;
-        headings.push({ level, text: match[2], id: `section-${h2Count}` });
+        extractedHeadings.push({ level, text: match[2], id: `section-${h2Count}` });
       } else {
-        h3Count++;
-        headings.push({ level, text: match[2], id: `section-${h2Count}-${h3Count}` });
+        h3Count += 1;
+        extractedHeadings.push({ level, text: match[2], id: `section-${h2Count}-${h3Count}` });
       }
     }
-    return headings;
+
+    return extractedHeadings;
   };
 
   const headings = extractHeadings(content);
+  const headingIdMap = new Map(headings.map((heading) => [heading.text, heading.id]));
 
-  // Map heading text → id for ReactMarkdown renderer
-  const headingIdMap = new Map(headings.map(h => [h.text, h.id]));
-
-  const handleTocClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
-    e.preventDefault();
-    const el = document.getElementById(id);
-    if (el) {
-      const top = el.getBoundingClientRect().top + window.scrollY - 100;
+  const handleTocClick = (event: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    event.preventDefault();
+    const element = document.getElementById(id);
+    if (element) {
+      const top = element.getBoundingClientRect().top + window.scrollY - 100;
       window.scrollTo({ top, behavior: 'smooth' });
     }
   };
 
-  // If partner only and not verified, don't show content
   if (doc.isPartnerOnly && !isVerified) {
     return (
       <div className="flex-1 bg-slate-50 flex items-center justify-center py-20">
@@ -139,7 +189,6 @@ export default function DocumentPage() {
 
   return (
     <div className="w-full bg-white">
-      {/* Breadcrumbs & Header */}
       <div className="border-b border-slate-200 bg-slate-50/50">
         <div className="container mx-auto px-4 py-8">
           <nav className="flex items-center text-sm font-medium text-slate-500 mb-6">
@@ -172,7 +221,6 @@ export default function DocumentPage() {
               </p>
             </div>
 
-            {/* Share Buttons */}
             <div className="flex items-center gap-2 shrink-0">
               <button
                 onClick={copyLink}
@@ -198,11 +246,8 @@ export default function DocumentPage() {
         </div>
       </div>
 
-      {/* Main Content Area */}
       <div className="container mx-auto px-4 py-12">
         <div className="flex flex-col lg:flex-row gap-12 relative">
-
-          {/* Content */}
           <div className="flex-1 min-w-0">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -231,6 +276,7 @@ export default function DocumentPage() {
                         </video>
                       );
                     }
+
                     return (
                       <img
                         {...props}
@@ -238,7 +284,7 @@ export default function DocumentPage() {
                         className="cursor-zoom-in hover:opacity-90 transition-opacity"
                       />
                     );
-                  }
+                  },
                 }}
               >
                 {isLoadingContent ? 'Đang tải nội dung...' : content}
@@ -251,11 +297,8 @@ export default function DocumentPage() {
             </div>
           </div>
 
-          {/* Sidebar */}
           <div className="hidden lg:block w-[260px] shrink-0">
             <div className="sticky top-28 flex flex-col gap-8">
-
-              {/* ToC */}
               {headings.length > 0 && (
                 <div>
                   <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-3 flex items-center gap-2">
@@ -266,7 +309,7 @@ export default function DocumentPage() {
                       <li key={index} className={heading.level === 3 ? 'ml-3' : ''}>
                         <a
                           href={`#${heading.id}`}
-                          onClick={(e) => handleTocClick(e, heading.id)}
+                          onClick={(event) => handleTocClick(event, heading.id)}
                           className="block py-1.5 text-slate-500 hover:text-blue-600 transition-colors leading-snug cursor-pointer"
                         >
                           {heading.text}
@@ -277,7 +320,6 @@ export default function DocumentPage() {
                 </div>
               )}
 
-              {/* Related Docs */}
               {relatedDocs.length > 0 && (
                 <div>
                   <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-3 flex items-center justify-between">
@@ -287,14 +329,14 @@ export default function DocumentPage() {
                     <span className="text-indigo-500 font-bold">{relatedDocs.length}</span>
                   </p>
                   <ul className="space-y-1 text-sm">
-                    {relatedDocs.map((rd) => (
-                      <li key={rd.id}>
+                    {relatedDocs.map((relatedDoc) => (
+                      <li key={relatedDoc.id}>
                         <Link
-                          to={`/doc/${rd.slug}`}
+                          to={getDocumentPath(product.slug, relatedDoc.slug)}
                           className="flex items-center gap-2.5 py-1.5 text-slate-500 hover:text-indigo-600 transition-colors group"
                         >
                           <FileText className="h-3.5 w-3.5 shrink-0 text-slate-300 group-hover:text-indigo-400 transition-colors" />
-                          <span className="line-clamp-2 leading-snug">{rd.title}</span>
+                          <span className="line-clamp-2 leading-snug">{relatedDoc.title}</span>
                         </Link>
                       </li>
                     ))}
@@ -302,7 +344,6 @@ export default function DocumentPage() {
                 </div>
               )}
 
-              {/* Support */}
               <div className="rounded-xl border border-slate-200 p-4 bg-slate-50">
                 <p className="text-sm font-semibold text-slate-700 mb-1">Cần hỗ trợ?</p>
                 <p className="text-xs text-slate-400 mb-3 leading-relaxed">Đội kỹ thuật luôn sẵn sàng giúp bạn.</p>
@@ -313,14 +354,11 @@ export default function DocumentPage() {
                   Liên hệ ngay
                 </a>
               </div>
-
             </div>
           </div>
-
         </div>
       </div>
 
-      {/* Zoomed Image Modal */}
       {zoomedImg && (
         <div
           className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/90 backdrop-blur-sm p-4 cursor-zoom-out"
@@ -333,7 +371,10 @@ export default function DocumentPage() {
           />
           <button
             className="absolute top-6 right-6 p-2 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors"
-            onClick={(e) => { e.stopPropagation(); setZoomedImg(null); }}
+            onClick={(event) => {
+              event.stopPropagation();
+              setZoomedImg(null);
+            }}
           >
             <X className="h-6 w-6" />
           </button>

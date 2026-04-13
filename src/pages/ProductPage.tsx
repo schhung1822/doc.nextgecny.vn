@@ -5,6 +5,7 @@ import { Search, Filter, FileText, Lock, ChevronRight, ArrowLeft } from 'lucide-
 import { DocType } from '../data/mockData';
 import { useData } from '../context/DataContext';
 import PartnerModal from '../components/PartnerModal';
+import { getDocumentPath } from '../lib/utils';
 
 const DOC_TYPE_LABELS: Record<DocType, string> = {
   installation: 'Hướng dẫn cài đặt',
@@ -22,7 +23,7 @@ export default function ProductPage() {
   const [selectedType, setSelectedType] = useState<DocType | 'all'>('all');
   
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [pendingSlug, setPendingSlug] = useState<string | null>(null);
+  const [pendingPath, setPendingPath] = useState<string | null>(null);
 
   const product = products.find(p => p.slug === slug);
   const documents = allDocuments.filter(d => d.productId === product?.id);
@@ -47,26 +48,26 @@ export default function ProductPage() {
     );
   }
 
-  const handleDocClick = (e: React.MouseEvent, docSlug: string, isPartnerOnly: boolean) => {
+  const handleDocClick = (e: React.MouseEvent, docPath: string, isPartnerOnly: boolean) => {
     e.preventDefault();
     
     if (isPartnerOnly) {
       const isVerified = sessionStorage.getItem('isPartnerVerified') === 'true';
       if (isVerified) {
-        navigate(`/doc/${docSlug}`);
+        navigate(docPath);
       } else {
-        setPendingSlug(docSlug);
+        setPendingPath(docPath);
         setIsModalOpen(true);
       }
     } else {
-      navigate(`/doc/${docSlug}`);
+      navigate(docPath);
     }
   };
 
   const handlePartnerSuccess = () => {
     setIsModalOpen(false);
-    if (pendingSlug) {
-      navigate(`/doc/${pendingSlug}`);
+    if (pendingPath) {
+      navigate(pendingPath);
     }
   };
 
@@ -142,11 +143,14 @@ export default function ProductPage() {
               </div>
             ) : (
               <div className="space-y-4">
-                {filteredDocs.map((doc, index) => (
+                {filteredDocs.map((doc, index) => {
+                  const docPath = getDocumentPath(product.slug, doc.slug);
+
+                  return (
                   <motion.a
                     key={doc.id}
-                    href={`/doc/${doc.slug}`}
-                    onClick={(e) => handleDocClick(e, doc.slug, doc.isPartnerOnly)}
+                    href={docPath}
+                    onClick={(e) => handleDocClick(e, docPath, doc.isPartnerOnly)}
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.05 }}
@@ -176,7 +180,8 @@ export default function ProductPage() {
                       </div>
                     </div>
                   </motion.a>
-                ))}
+                  );
+                })}
               </div>
             )}
           </div>

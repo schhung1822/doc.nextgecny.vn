@@ -33,8 +33,9 @@ export const initialCategories: Category[] = [
 ];
 
 export const initialProducts: Product[] = [
-  { id: 'p1', slug: 'he-thong-quan-ly-noi-dung-cms', name: 'Hệ thống Quản lý Nội dung (CMS)', description: 'Nền tảng quản lý bài viết, trang và người dùng.', categoryId: 'c1', icon: 'LayoutTemplate' },
-  { id: 'p2', slug: 'trang-thuong-mai-dien-tu-ecommerce', name: 'Trang Thương mại Điện tử (E-commerce)', description: 'Hệ thống bán hàng trực tuyến toàn diện.', categoryId: 'c1', icon: 'ShoppingCart' },
+  { id: 'p1', slug: 'website-qc-house', name: 'Website QC House', description: 'Web giới thiệu doanh nghiệp, blog & tuyển dụng', categoryId: 'c1', icon: 'LayoutTemplate' },
+  { id: 'p2', slug: 'website-phuc-bani', name: 'Website Hawk Media (Phúc BANI)', description: 'Website E-learning kết hợp blog', categoryId: 'c1', icon: 'GraduationCap' },
+  { id: 'p2', slug: 'website-fpt-telecom-bac-ninh', name: 'Website FPT Telecom (Bắc Ninh)', description: 'Web giới thiệu doanh nghiệp, blog & tuyển dụng', categoryId: 'c1', icon: 'LayoutTemplate' },
   { id: 'p3', slug: 'ung-dung-quan-ly-ban-hang-sales-app', name: 'Ứng dụng Quản lý Bán hàng (Sales App)', description: 'Ứng dụng di động hỗ trợ đội ngũ sales.', categoryId: 'c2', icon: 'Smartphone' },
   { id: 'p4', slug: 'ung-dung-dat-lich-dich-vu-booking-app', name: 'Ứng dụng Đặt lịch & Dịch vụ (Booking App)', description: 'Giải pháp đặt lịch hẹn thông minh.', categoryId: 'c2', icon: 'CalendarDays' },
   { id: 'p5', slug: 'cong-cu-tu-dong-hoa-marketing-marketing-tool', name: 'Công cụ Tự động hóa Marketing (Marketing Tool)', description: 'Tối ưu hóa các chiến dịch tiếp thị.', categoryId: 'c3', icon: 'Megaphone' },
@@ -43,12 +44,6 @@ export const initialProducts: Product[] = [
 ];
 
 export const initialDocuments: Document[] = [
-  // CMS
-  { id: 'd1', slug: 'huong-dan-quan-ly-bai-viet-trang', title: 'Hướng dẫn Quản lý Bài viết & Trang', description: 'Cách tạo, chỉnh sửa và xuất bản nội dung.', type: 'guide', isPartnerOnly: false, productId: 'p1', content: '/docs/d1.md' },
-  { id: 'd2', slug: 'cau-hinh-menu-giao-dien-website', title: 'Cấu hình Menu & Giao diện Website', description: 'Tùy chỉnh giao diện hiển thị cho người dùng.', type: 'installation', isPartnerOnly: false, productId: 'p1', content: '/docs/d2.md' },
-  { id: 'd3', slug: 'quan-ly-nguoi-dung-phan-quyen', title: 'Quản lý Người dùng & Phân quyền', description: 'Thiết lập vai trò cho các thành viên.', type: 'guide', isPartnerOnly: false, productId: 'p1', content: '/docs/d3.md' },
-  { id: 'd4', slug: 'huong-dan-tich-hop-api-cong-thanh-toan', title: 'Hướng dẫn Tích hợp API Cổng Thanh toán', description: 'Tài liệu kỹ thuật kết nối thanh toán.', type: 'api', isPartnerOnly: true, productId: 'p1', content: '/docs/d4.md' },
-
   // E-commerce
   { id: 'd5', slug: 'huong-dan-dang-san-pham-quan-ly-kho-hang', title: 'Hướng dẫn Đăng sản phẩm & Quản lý Kho hàng', description: 'Quản lý danh mục sản phẩm và tồn kho.', type: 'guide', isPartnerOnly: false, productId: 'p2', content: '/docs/d5.md' },
   { id: 'd6', slug: 'quan-ly-don-hang-van-chuyen', title: 'Quản lý Đơn hàng & Vận chuyển', description: 'Xử lý đơn hàng từ lúc đặt đến lúc giao.', type: 'guide', isPartnerOnly: false, productId: 'p2', content: '/docs/d6.md' },
@@ -85,6 +80,15 @@ export const initialDocuments: Document[] = [
   { id: 'd27', slug: 'huong-dan-sua-noi-dung-website', title: 'Hướng dẫn thay sửa các nội dung trên website', description: 'Hướng dẫn thay sửa các nội dung trên website', type: 'guide', isPartnerOnly: false, productId: 'p7', content: '/topmus/huong-dan-sua-noi-dung-website.md' },
   { id: 'd28', slug: 'huong-dan-sua-anh-noi-dung-mau', title: 'Hướng dẫn sửa ảnh/nội dung ở các mẫu section', description: 'Hướng dẫn thay banner website', type: 'guide', isPartnerOnly: false, productId: 'p7', content: '/topmus/huong-dan-sua-anh-noi-dung-mau.md' },
   { id: 'd29', slug: 'huong-dan-seo-website', title: 'Hướng dẫn SEO website', description: 'Hướng dẫn SEO website', type: 'guide', isPartnerOnly: false, productId: 'p7', content: '/topmus/huong-dan-seo-website.md' },
+
+  // QC House
+  { id: 'd30', slug: 'dang-tin-tuc-bai-viet', title: 'Đăng tin tức bài viết', description: 'Khởi tạo các tin tức và bài viết về QC House.', type: 'guide', isPartnerOnly: false, productId: 'p1', content: '/qchouse/dang-tin-tuc-bai-viet-qchouse.md' },
+  { id: 'd31', slug: 'dang-tin-tuyen-dung', title: 'Đăng tin tuyển dụng', description: 'Đăng tin tuyển dụng các vị trí tại QC House.', type: 'guide', isPartnerOnly: false, productId: 'p1', content: '/qchouse/dang-tin-tuyen-dung-qchouse.md' },
+  { id: 'd32', slug: 'dang-du-an', title: 'Đăng dự án QC House', description: 'Đăng tin tuyển dụng các vị trí tại QC House.', type: 'guide', isPartnerOnly: false, productId: 'p1', content: '/qchouse/dang-du-an-qchouse.md' },
+  { id: 'd33', slug: 'huong-dan-sua-noi-dung-website', title: 'Hướng dẫn thay sửa các nội dung trên website', description: 'Hướng dẫn thay sửa các nội dung trên website', type: 'guide', isPartnerOnly: false, productId: 'p1', content: '/qchouse/huong-dan-sua-noi-dung-website-qchouse.md' },
+  { id: 'd34', slug: 'huong-dan-seo-website', title: 'Hướng dẫn SEO website', description: 'Hướng dẫn SEO website', type: 'guide', isPartnerOnly: false, productId: 'p1', content: '/qchouse/huong-dan-seo-website-qchouse.md' },
+  { id: 'd35', slug: 'tao-tai-khoan-phan-quyen-cho-nhan-vien', title: 'Tạo tài khoản phân quyền cho nhân viên', description: 'Tạo tài khoản truy cập trang admin và phân quyền quản trị website.', type: 'guide', isPartnerOnly: false, productId: 'p1', content: '/qchouse/tao-tai-khoan-phan-quyen-cho-nhan-vien-qchouse.md' },
+
 ];
 
 export const VALID_PARTNER_CODES = ['PARTNER2026', 'NEXTGENCY-VIP', 'DEV-ACCESS'];
