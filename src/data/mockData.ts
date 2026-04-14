@@ -44,11 +44,6 @@ export const initialProducts: Product[] = [
 ];
 
 export const initialDocuments: Document[] = [
-  // E-commerce
-  { id: 'd5', slug: 'huong-dan-dang-san-pham-quan-ly-kho-hang', title: 'Hướng dẫn Đăng sản phẩm & Quản lý Kho hàng', description: 'Quản lý danh mục sản phẩm và tồn kho.', type: 'guide', isPartnerOnly: false, productId: 'p2', content: '/docs/d5.md' },
-  { id: 'd6', slug: 'quan-ly-don-hang-van-chuyen', title: 'Quản lý Đơn hàng & Vận chuyển', description: 'Xử lý đơn hàng từ lúc đặt đến lúc giao.', type: 'guide', isPartnerOnly: false, productId: 'p2', content: '/docs/d6.md' },
-  { id: 'd7', slug: 'huong-dan-toi-uu-hoa-seo-cho-trang-san-pham', title: 'Hướng dẫn Tối ưu hóa SEO cho Trang Sản phẩm', description: 'Kỹ thuật SEO nâng cao cho E-commerce.', type: 'guide', isPartnerOnly: true, productId: 'p2', content: '/docs/d7.md' },
-
   // Sales App
   { id: 'd8', slug: 'huong-dan-cai-dat-dang-nhap-ung-dung', title: 'Hướng dẫn Cài đặt & Đăng nhập Ứng dụng', description: 'Cài đặt app trên iOS và Android.', type: 'installation', isPartnerOnly: false, productId: 'p3', content: '/docs/d8.md' },
   { id: 'd9', slug: 'quan-ly-khach-hang-lich-hen', title: 'Quản lý Khách hàng & Lịch hẹn', description: 'Theo dõi thông tin khách hàng tiềm năng.', type: 'guide', isPartnerOnly: false, productId: 'p3', content: '/docs/d9.md' },
@@ -89,6 +84,17 @@ export const initialDocuments: Document[] = [
   { id: 'd34', slug: 'huong-dan-seo-website', title: 'Hướng dẫn SEO website', description: 'Hướng dẫn SEO website', type: 'guide', isPartnerOnly: false, productId: 'p1', content: '/qchouse/huong-dan-seo-website-qchouse.md' },
   { id: 'd35', slug: 'tao-tai-khoan-phan-quyen-cho-nhan-vien', title: 'Tạo tài khoản phân quyền cho nhân viên', description: 'Tạo tài khoản truy cập trang admin và phân quyền quản trị website.', type: 'guide', isPartnerOnly: false, productId: 'p1', content: '/qchouse/tao-tai-khoan-phan-quyen-cho-nhan-vien-qchouse.md' },
 
+  // PHUC BANI
+  { id: 'd36', slug: 'dang-bai-viet', title: 'Hướng dẫn Đăng bài viết', description: 'Hướng dẫn Đăng bài viết', type: 'guide', isPartnerOnly: false, productId: 'p2', content: '/phucbani/dang-bai-viet.md' },
+  { id: 'd37', slug: 'dang-cau-chuyen-thanh-cong', title: 'Hướng dẫn đăng câu chuyện thành công', description: 'Hướng dẫn đăng câu chuyện thành công', type: 'guide', isPartnerOnly: false, productId: 'p2', content: '/phucbani/dang-cau-chuyen-thanh-cong.md' },
+    { id: 'd38', slug: 'dang-khoa-hoc', title: 'Hướng dẫn đăng khóa học', description: 'Hướng dẫn đăng khóa học', type: 'guide', isPartnerOnly: false, productId: 'p2', content: '/phucbani/dang-khoa-hoc.md' },
+    { id: 'd39', slug: 'quan-ly-don-hang', title: 'Quản lý đơn hàng', description: 'Quản lý đơn hàng', type: 'guide', isPartnerOnly: false, productId: 'p2', content: '/phucbani/quan-ly-don-hang.md' },
+  { id: 'd40', slug: 'quan-ly-khoa-hoc', title: 'Quản lý khóa học', description: 'Quản lý khóa học', type: 'guide', isPartnerOnly: false, productId: 'p2', content: '/phucbani/quan-ly-khoa-hoc.md' },
+  { id: 'd41', slug: 'quan-ly-hoc-vien', title: 'Hướng dẫn quản lý học viên', description: 'Hướng dẫn quản lý học viên', type: 'guide', isPartnerOnly: false, productId: 'p2', content: '/phucbani/quan-ly-hoc-vien.md' },
+  { id: 'd42', slug: 'sua-noi-dung-trang-web', title: 'Hướng dẫn sửa nội dung trang web', description: 'Hướng dẫn sửa nội dung trang web', type: 'guide', isPartnerOnly: false, productId: 'p2', content: '/phucbani/sua-noi-dung-trang-web.md' },
+  { id: 'd43', slug: 'tao-tai-khoan-phan-quyen-cho-nhan-vien', title: 'Tạo tài khoản phân quyền cho nhân viên', description: 'Tạo tài khoản truy cập trang admin và phân quyền quản trị website.', type: 'guide', isPartnerOnly: false, productId: 'p2', content: '/phucbani/tao-tai-khoan-phan-quyen-cho-nhan-vien.md' },
+  { id: 'd44', slug: 'tich-hop-cong-thanh-toan-sepay', title: 'Hướng dẫn tích hợp cổng thanh toán SePay', description: 'Hướng dẫn tích hợp cổng thanh toán SePay', type: 'guide', isPartnerOnly: false, productId: 'p2', content: '/phucbani/tich-hop-cong-thanh-toan-sepay.md' },
+  { id: 'd45', slug: 'cach-lay-link-video-trong-loom', title: 'Hướng dẫn lấy link video trong Loom', description: 'Hướng dẫn lấy link video trong Loom', type: 'guide', isPartnerOnly: false, productId: 'p2', content: '/phucbani/cach-lay-link-video-trong-loom.md' },
 ];
 
 export const VALID_PARTNER_CODES = ['PARTNER2026', 'NEXTGENCY-VIP', 'DEV-ACCESS'];
