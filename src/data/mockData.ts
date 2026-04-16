@@ -35,7 +35,7 @@ export const initialCategories: Category[] = [
 export const initialProducts: Product[] = [
   { id: 'p1', slug: 'website-qc-house', name: 'Website QC House', description: 'Web giới thiệu doanh nghiệp, blog & tuyển dụng', categoryId: 'c1', icon: 'LayoutTemplate' },
   { id: 'p2', slug: 'website-phuc-bani', name: 'Website Hawk Media (Phúc BANI)', description: 'Website E-learning kết hợp blog', categoryId: 'c1', icon: 'GraduationCap' },
-  { id: 'p2', slug: 'website-fpt-telecom-bac-ninh', name: 'Website FPT Telecom (Bắc Ninh)', description: 'Web giới thiệu doanh nghiệp, blog & tuyển dụng', categoryId: 'c1', icon: 'LayoutTemplate' },
+  { id: 'p8', slug: 'website-fpt-telecom-bac-ninh', name: 'Website FPT Telecom', description: 'Web giới thiệu doanh nghiệp, blog & tuyển dụng', categoryId: 'c1', icon: 'LayoutTemplate' },
   { id: 'p3', slug: 'ung-dung-quan-ly-ban-hang-sales-app', name: 'Ứng dụng Quản lý Bán hàng (Sales App)', description: 'Ứng dụng di động hỗ trợ đội ngũ sales.', categoryId: 'c2', icon: 'Smartphone' },
   { id: 'p4', slug: 'ung-dung-dat-lich-dich-vu-booking-app', name: 'Ứng dụng Đặt lịch & Dịch vụ (Booking App)', description: 'Giải pháp đặt lịch hẹn thông minh.', categoryId: 'c2', icon: 'CalendarDays' },
   { id: 'p5', slug: 'cong-cu-tu-dong-hoa-marketing-marketing-tool', name: 'Công cụ Tự động hóa Marketing (Marketing Tool)', description: 'Tối ưu hóa các chiến dịch tiếp thị.', categoryId: 'c3', icon: 'Megaphone' },
@@ -87,14 +87,22 @@ export const initialDocuments: Document[] = [
   // PHUC BANI
   { id: 'd36', slug: 'dang-bai-viet', title: 'Hướng dẫn Đăng bài viết', description: 'Hướng dẫn Đăng bài viết', type: 'guide', isPartnerOnly: false, productId: 'p2', content: '/phucbani/dang-bai-viet.md' },
   { id: 'd37', slug: 'dang-cau-chuyen-thanh-cong', title: 'Hướng dẫn đăng câu chuyện thành công', description: 'Hướng dẫn đăng câu chuyện thành công', type: 'guide', isPartnerOnly: false, productId: 'p2', content: '/phucbani/dang-cau-chuyen-thanh-cong.md' },
-    { id: 'd38', slug: 'dang-khoa-hoc', title: 'Hướng dẫn đăng khóa học', description: 'Hướng dẫn đăng khóa học', type: 'guide', isPartnerOnly: false, productId: 'p2', content: '/phucbani/dang-khoa-hoc.md' },
-    { id: 'd39', slug: 'quan-ly-don-hang', title: 'Quản lý đơn hàng', description: 'Quản lý đơn hàng', type: 'guide', isPartnerOnly: false, productId: 'p2', content: '/phucbani/quan-ly-don-hang.md' },
+  { id: 'd38', slug: 'dang-khoa-hoc', title: 'Hướng dẫn đăng khóa học', description: 'Hướng dẫn đăng khóa học', type: 'guide', isPartnerOnly: false, productId: 'p2', content: '/phucbani/dang-khoa-hoc.md' },
+  { id: 'd39', slug: 'quan-ly-don-hang', title: 'Quản lý đơn hàng', description: 'Quản lý đơn hàng', type: 'guide', isPartnerOnly: false, productId: 'p2', content: '/phucbani/quan-ly-don-hang.md' },
   { id: 'd40', slug: 'quan-ly-khoa-hoc', title: 'Quản lý khóa học', description: 'Quản lý khóa học', type: 'guide', isPartnerOnly: false, productId: 'p2', content: '/phucbani/quan-ly-khoa-hoc.md' },
   { id: 'd41', slug: 'quan-ly-hoc-vien', title: 'Hướng dẫn quản lý học viên', description: 'Hướng dẫn quản lý học viên', type: 'guide', isPartnerOnly: false, productId: 'p2', content: '/phucbani/quan-ly-hoc-vien.md' },
   { id: 'd42', slug: 'sua-noi-dung-trang-web', title: 'Hướng dẫn sửa nội dung trang web', description: 'Hướng dẫn sửa nội dung trang web', type: 'guide', isPartnerOnly: false, productId: 'p2', content: '/phucbani/sua-noi-dung-trang-web.md' },
   { id: 'd43', slug: 'tao-tai-khoan-phan-quyen-cho-nhan-vien', title: 'Tạo tài khoản phân quyền cho nhân viên', description: 'Tạo tài khoản truy cập trang admin và phân quyền quản trị website.', type: 'guide', isPartnerOnly: false, productId: 'p2', content: '/phucbani/tao-tai-khoan-phan-quyen-cho-nhan-vien.md' },
   { id: 'd44', slug: 'tich-hop-cong-thanh-toan-sepay', title: 'Hướng dẫn tích hợp cổng thanh toán SePay', description: 'Hướng dẫn tích hợp cổng thanh toán SePay', type: 'guide', isPartnerOnly: false, productId: 'p2', content: '/phucbani/tich-hop-cong-thanh-toan-sepay.md' },
   { id: 'd45', slug: 'cach-lay-link-video-trong-loom', title: 'Hướng dẫn lấy link video trong Loom', description: 'Hướng dẫn lấy link video trong Loom', type: 'guide', isPartnerOnly: false, productId: 'p2', content: '/phucbani/cach-lay-link-video-trong-loom.md' },
+
+  // FPT Telecom
+  { id: 'd46', slug: 'dang-tin-tuc-bai-viet', title: 'Đăng tin tức bài viết', description: 'Khởi tạo các tin tức và bài viết về FPT Telecom.', type: 'guide', isPartnerOnly: false, productId: 'p8', content: '/fpt-telecom/dang-tin-tuc-bai-viet.md' },
+  { id: 'd47', slug: 'dang-tin-tuyen-dung', title: 'Đăng tin tuyển dụng', description: 'Đăng tin tuyển dụng các vị trí tại FPT Telecom.', type: 'guide', isPartnerOnly: false, productId: 'p8', content: '/fpt-telecom/dang-tin-tuyen-dung.md' },
+  { id: 'd49', slug: 'huong-dan-sua-noi-dung-website', title: 'Hướng dẫn thay sửa các nội dung trên website', description: 'Hướng dẫn thay sửa các nội dung trên website', type: 'guide', isPartnerOnly: false, productId: 'p8', content: '/fpt-telecom/huong-dan-sua-noi-dung-website.md' },
+  { id: 'd50', slug: 'huong-dan-seo-website', title: 'Hướng dẫn SEO website', description: 'Hướng dẫn SEO website', type: 'guide', isPartnerOnly: false, productId: 'p8', content: '/fpt-telecom/huong-dan-seo-website.md' },
+  { id: 'd51', slug: 'tao-tai-khoan-phan-quyen-cho-nhan-vien', title: 'Tạo tài khoản phân quyền cho nhân viên', description: 'Tạo tài khoản truy cập trang admin và phân quyền quản trị website.', type: 'guide', isPartnerOnly: false, productId: 'p8', content: '/fpt-telecom/tao-tai-khoan-phan-quyen-cho-nhan-vien.md' },
+  { id: 'd52', slug: 'dang-tin-bao-tri-noi-ve-fpt', title: 'Đăng tin báo trí nói về FPT', description: 'Đăng tin báo trí nói về FPT', type: 'guide', isPartnerOnly: false, productId: 'p8', content: '/fpt-telecom/dang-tin-bao-tri-noi-ve-fpt.md' },
 ];
 
 export const VALID_PARTNER_CODES = ['PARTNER2026', 'NEXTGENCY-VIP', 'DEV-ACCESS'];

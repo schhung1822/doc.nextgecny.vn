@@ -8,7 +8,7 @@ Tài liệu này hướng dẫn các quản trị viên cách tạo và xuất b
 1. Tại thanh menu bên trái, chọn mục **Tuyển dụng**.
 2. Nhấn nút **Add new Tuyển dụng** ở phía trên cùng để tạo bài tuyển dụng mới.
 
-![Tạo tuyển dụng](/qchouse/img/td1.webp)
+![Tạo tuyển dụng](/fpt-telecom/img/td1.webp)
 *Hình 1: Truy cập và tạo bài tuyển dụng mới.*
 
 > **Gợi ý:** Bạn có thể xem danh sách tất cả bài tuyển dụng đã đăng tại đây để chỉnh sửa hoặc xóa bài cũ.
@@ -20,7 +20,7 @@ Sau khi tạo bài mới, giao diện soạn thảo sẽ hiện ra. Bạn cần 
 
 ### Tiêu đề
 Nhập tiêu đề tin tuyển dụng.  
-- Ở đây bạn cần nhập tiêu đề cho bài tuyển dụng
+- Ở đây bạn cần nhập tiêu đề bài viết
 
 ### Nội dung tuyển dụng
 Trong phần nội dung, cần trình bày theo các mục sau:
@@ -31,7 +31,7 @@ Trong phần nội dung, cần trình bày theo các mục sau:
 - Địa điểm làm việc  
 - Cách thức ứng tuyển  
 
-![Nhập tiêu đề và nội dung](/qchouse/img/td2.webp)
+![Nhập tiêu đề và nội dung](/fpt-telecom/img/td2.webp)
 *Hình 2: Nhập tiêu đề và nội dung tuyển dụng.*
 
 > **Lưu ý:** Nội dung nên trình bày rõ ràng bằng danh sách bullet để dễ đọc.
@@ -52,8 +52,11 @@ Tại đây cần nhập đầy đủ các thông tin sau:
 | Học vấn | Đại học trở lên |
 | Số lượng tuyển | Ví dụ: 3 |
 | Hình thức làm việc | Toàn thời gian |
+| Hạn nộp hồ sơ | Ví dụ: 30/04/2026 |
+| Tên chi nhánh | Ví dụ: Chi nhánh Bắc Ninh |
+| Mô tả chi nhánh | Viết mô tả chi nhánh |
 
-![Thông tin tuyển dụng](/qchouse/img/td3.webp)
+![Thông tin tuyển dụng](/fpt-telecom/img/td3.webp)
 *Hình 3: Nhập thông tin chi tiết tuyển dụng.*
 
 > **Lưu ý:** Cần nhập đầy đủ thông tin để hiển thị đúng trên trang danh sách tuyển dụng.
@@ -91,6 +94,7 @@ Dưới đây là video demo quá trình đăng tin tức bài viết chi tiết
 | Thông tin tuyển dụng | Điền đầy đủ các trường |
 | Danh mục | Phải chọn |
 | Trạng thái | Publish để hiển thị ngoài website |
+
 
 
 ---
