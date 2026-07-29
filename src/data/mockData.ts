@@ -41,6 +41,7 @@ export const initialProducts: Product[] = [
   { id: 'p5', slug: 'cong-cu-tu-dong-hoa-marketing-marketing-tool', name: 'Công cụ Tự động hóa Marketing (Marketing Tool)', description: 'Tối ưu hóa các chiến dịch tiếp thị.', categoryId: 'c3', icon: 'Megaphone' },
   { id: 'p6', slug: 'cong-cu-quan-ly-du-an-project-tool', name: 'Công cụ Quản lý Dự án (Project Tool)', description: 'Theo dõi tiến độ và cộng tác nhóm.', categoryId: 'c3', icon: 'Kanban' },
   { id: 'p7', slug: 'website-topmus', name: 'Website TOPMUS', description: 'Web giới thiệu doanh nghiệp, blog & tuyển dụng', categoryId: 'c1', icon: 'LayoutTemplate' },
+  { id: 'p9', slug: 'website-hoang-minh-logistic', name: 'Website Hoàng Minh', description: 'Web giới thiệu doanh nghiệp, blog & tuyển dụng', categoryId: 'c1', icon: 'LayoutTemplate' },
 ];
 
 export const initialDocuments: Document[] = [
@@ -103,6 +104,17 @@ export const initialDocuments: Document[] = [
   { id: 'd50', slug: 'huong-dan-seo-website', title: 'Hướng dẫn SEO website', description: 'Hướng dẫn SEO website', type: 'guide', isPartnerOnly: false, productId: 'p8', content: '/fpt-telecom/huong-dan-seo-website.md' },
   { id: 'd51', slug: 'tao-tai-khoan-phan-quyen-cho-nhan-vien', title: 'Tạo tài khoản phân quyền cho nhân viên', description: 'Tạo tài khoản truy cập trang admin và phân quyền quản trị website.', type: 'guide', isPartnerOnly: false, productId: 'p8', content: '/fpt-telecom/tao-tai-khoan-phan-quyen-cho-nhan-vien.md' },
   { id: 'd52', slug: 'dang-tin-bao-tri-noi-ve-fpt', title: 'Đăng tin báo trí nói về FPT', description: 'Đăng tin báo trí nói về FPT', type: 'guide', isPartnerOnly: false, productId: 'p8', content: '/fpt-telecom/dang-tin-bao-tri-noi-ve-fpt.md' },
+
+  // HOANGMINH
+  { id: 'd53', slug: 'dang-tin-tuc-bai-viet', title: 'Đăng tin tức bài viết', description: 'Cập nhật các tin tức / bài viết về tin tức nhành và bản tin của hoàng minh.', type: 'guide', isPartnerOnly: false, productId: 'p9', content: '/hoangminh/dang-tin-tuc-bai-viet.md' },
+  { id: 'd54', slug: 'dang-tin-tuyen-dung', title: 'Đăng tin tuyển dụng', description: 'Đăng tin tuyển dụng các vị trí tại Hoàng Minh.', type: 'guide', isPartnerOnly: false, productId: 'p9', content: '/hoangminh/dang-tin-tuyen-dung.md' },
+  { id: 'd55', slug: 'tao-tai-khoan-phan-quyen-cho-nhan-vien', title: 'Tạo tài khoản phân quyền cho nhân viên', description: 'Tạo tài khoản truy cập trang admin và phân quyền quản trị website.', type: 'guide', isPartnerOnly: false, productId: 'p9', content: '/hoangminh/tao-tai-khoan-phan-quyen-cho-nhan-vien.md' },
+  { id: 'd56', slug: 'huong-dan-thay-banner-va-anh-website', title: 'Hướng dẫn thay banner và ảnh trên website', description: 'Hướng dẫn thay banner và ảnh trên website website', type: 'guide', isPartnerOnly: false, productId: 'p9', content: '/hoangminh/huong-dan-thay-banner-website.md' },
+  { id: 'd57', slug: 'huong-dan-sua-noi-dung-website', title: 'Hướng dẫn thay sửa các nội dung trên website', description: 'Hướng dẫn thay sửa các nội dung trên website', type: 'guide', isPartnerOnly: false, productId: 'p9', content: '/hoangminh/huong-dan-sua-noi-dung-website.md' },
+  { id: 'd58', slug: 'them-mang-luoi-doi-tac', title: 'Thêm / sửa mạng lưới đối tác', description: 'Hướng dẫn thao tác thêm / sửa mạng lưới đối tác', type: 'guide', isPartnerOnly: false, productId: 'p9', content: '/hoangminh/them-mang-luoi-doi-tac.md' },
+  { id: 'd59', slug: 'them-du-an', title: 'Thêm / sửa dự án', description: 'Hướng dẫn thao tác thêm / sửa dự án', type: 'guide', isPartnerOnly: false, productId: 'p9', content: '/hoangminh/them-du-an.md' },
+  { id: 'd60', slug: 'them-cam-nang-tai-lieu', title: 'Thêm / sửa cẩm nang tài liệu', description: 'Hướng dẫn thao tác thêm / sửa cẩm nang tài liệu', type: 'guide', isPartnerOnly: false, productId: 'p9', content: '/hoangminh/them-cam-nang-tai-lieu.md' },
+  { id: 'd61', slug: 'huong-dan-seo-website', title: 'Hướng dẫn SEO website', description: 'Hướng dẫn SEO website', type: 'guide', isPartnerOnly: false, productId: 'p9', content: '/hoangminh/huong-dan-seo-website.md' },
 ];
 
 export const VALID_PARTNER_CODES = ['PARTNER2026', 'NEXTGENCY-VIP', 'DEV-ACCESS'];
